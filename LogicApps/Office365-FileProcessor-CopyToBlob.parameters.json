@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "logicAppName": {
+            "value": "Office365-FileProcessor-CopyToBlob"
+        },
+        "blobConnectionName": {
+            "value": "blobConnector"
+        },
+        "office365ConnectionName": {
+            "value": "office365Connector"
+        },
+        "blobAccountName": {
+           "value": "<--provide storage account name-->"
+        },
+        "blobAccessKey": {
+            "value": "<--provider storage account key-->" 
+        }
+    }
+}
