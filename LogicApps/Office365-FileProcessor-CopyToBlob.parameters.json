@@ -12,10 +12,15 @@
             "value": "office365Connector"
         },
         "blobAccountName": {
-           "value": "<--provide storage account name-->"
+            "value": "<storage account name>"
         },
         "blobAccessKey": {
-            "value": "<--provider storage account key-->" 
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/<subscription id>/resourceGroups/<resource-group-name>/providers/Microsoft.KeyVault/vaults/<key vault name>"
+                 },
+                 "secretName": "<provide secret name>"
+            }
         }
     }
 }

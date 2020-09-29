@@ -21,21 +21,21 @@
             }
         },
         "blobAccessKey": {
-            "type": "string",
+            "type": "securestring",
             "metadata": {
                 "description": "blob acccess key"
             }
         }
     },
     "variables": {
-
+       "resourceLocation" : "[resourceGroup().location]"
     },
     "resources": [
         {
             "type": "Microsoft.Logic/workflows",
             "apiVersion": "2017-07-01",
             "name": "[parameters('logicAppName')]",
-            "location": "eastus2",
+            "location": "[variables('resourceLocation')]",
             "tags": {
                 "Environment": "poc"
             },
@@ -235,24 +235,23 @@
                     }
                 },
                 "parameters": {
-                    // Workflow definition "$connections" parameter values to use at runtime
                     "$connections": {
-                         "azureblob": {
-                                "connectionId": "/subscriptions/41f9caa3-11fa-460a-8c1c-8622756a4d01/resourceGroups/LogicApprg/providers/Microsoft.Web/connections/azureblobConnector",
-                                "connectionName": "[parameters('blobConnectionName')]",
-                                "id": "/subscriptions/41f9caa3-11fa-460a-8c1c-8622756a4d01/providers/Microsoft.Web/locations/eastus/managedApis/azureblob"
+                        "value": {
+                            "azureblob": {
+                                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/', 'azureblob')]",
+                                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('blobConnectionName'))]",
+                                "connectionName": "[parameters('blobConnectionName')]"
                             },
                             "office365": {
-                                "connectionId": "/subscriptions/41f9caa3-11fa-460a-8c1c-8622756a4d01/resourceGroups/LogicApprg/providers/Microsoft.Web/connections/office365Connector",
-                                "connectionName": "[parameters('office365ConnectionName')]",
-                                "id": "/subscriptions/41f9caa3-11fa-460a-8c1c-8622756a4d01/providers/Microsoft.Web/locations/eastus/managedApis/office365"
+                                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', resourceGroup().location , '/managedApis/', 'office365')]",
+                                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('office365ConnectionName'))]",
+                                "connectionName": "[parameters('office365ConnectionName')]"
                             }
                         }
                     }
                 }
-
             }
-        ,
+        },
         {
             "name": "[parameters('office365ConnectionName')]",
             "type": "Microsoft.Web/connections",
